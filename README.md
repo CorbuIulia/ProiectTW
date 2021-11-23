@@ -3,7 +3,7 @@
 Obiectiv proiect:
 Realizarea unei aplicații web care să permită acordarea de feedback continuu unei activități.
 
-Descriere:
+Descriere proiect:
 Aplicația trebuie să permită acordarea de feedback continuu la un curs sau seminariu.
 Platforma este bazată pe o aplicație web cu arhitectură de tip Single Page Application accesibilă în browser de pe desktop, dispozitive mobile sau tablete (considerând preferințele utilizatorului).
 
