@@ -1,6 +1,6 @@
 # ProiectTW
 
-Obiectiv:
+Obiectiv proiect:
 Realizarea unei aplicații web care să permită acordarea de feedback continuu unei activități.
 
 Descriere:
