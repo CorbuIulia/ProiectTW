@@ -10,7 +10,7 @@ const Student = require('./models/Student')
 const Teacher = require('./models/Teacher');
 const Group=require('./models/GroupStud');
 const Feedback=require('./models/Feedback')
-const { noExtendRight } = require("sequelize/dist/lib/operators");
+//const { noExtendRight } = require("sequelize/dist/lib/operators");
 const { message } = require('statuses');
 
 
@@ -35,11 +35,16 @@ app.use(
 );
 app.use(express.json());
 
+//importare routes
+app.use("/api-teacher",require("./routes/teachers"));
+app.use("/api-group",require("./routes/groups"));
+
 app.get('/', (req, res) => {
     res.send('Welcome to my API');
 });
 
-app.listen(port, () => {
+app.
+listen(port, () => {
     console.log('Running on port ' + port);
 });
 
@@ -60,103 +65,103 @@ app.put("/", async (request, response, next) => {
     }
 });
 
-//POST pentru adaugarea unui nou profesor
-app.post('/teachers', async (req, res, next) => {
-    try {
-        const teacher = await Teacher.create(req.body);
-        res.status(201).location(teacher.id).send()
-        res.json({ message: "teacher created" })
-    } catch (error) {
-        next(error)
-    }
-})
+// //POST pentru adaugarea unui nou profesor
+// app.post('/teachers', async (req, res, next) => {
+//     try {
+//         const teacher = await Teacher.create(req.body);
+//         res.status(201).location(teacher.id).send()
+//         res.json({ message: "teacher created" })
+//     } catch (error) {
+//         next(error)
+//     }
+// })
 
-//GET pentru afisarea tuturor profesorilor
-app.get('/teachers', async (req, res, next) => {
-    try {
-        const teachers = await Teacher.findAll();
-        if (teachers.length > 0) {
-            res.json(teachers)//trimitem profesorii existenti
-        } else {
-            res.status(404).json({ message: "not found" });
-        }
-    } catch (error) {
-        next(error)
-    }
-})
-
-
-//FUNCTIE CARE PERMITE ADAUGAREA UNUI CURS PENTRU UN ANUMIT PROFESOR
-//adaugare curs la un anumit profesor
-app.post('/teachers/:teacherId/courses', async (req, res, next) => {
-    try {
-        //cautare profesor
-        const teacher= await Teacher.findByPk(req.params.teacherId);
-        if (teacher) {
-            const course= await Course.create(req.body);
-            teacher.addCourse(course);
-            await teacher.save();
-            res.status(201).json({message:"created"})
-
-        } else {
-            res.status(404).json({ message: "not found" })
-        }
-
-    } catch (error) {
-        next(error)
-        res.status(400).json({message:"eroare"})
-    }
-})
-
-//afisarea cursurilor unui anumit profesor
-app.get('/teachers/:teacherId/courses', async (req, res, next) => {
-    try {
-        const teacher = await Teacher.findByPk(req.params.teacherId);
-        if (teacher) {
-            const courses = await teacher.getCourses();
-            if (courses.length > 0) {
-                res.json(courses)//trimitem cursurile identificate
-
-            } else {
-                res.status(404).json({ message: " no courses" })
-            }
+// //GET pentru afisarea tuturor profesorilor
+// app.get('/teachers', async (req, res, next) => {
+//     try {
+//         const teachers = await Teacher.findAll();
+//         if (teachers.length > 0) {
+//             res.json(teachers)//trimitem profesorii existenti
+//         } else {
+//             res.status(404).json({ message: "not found" });
+//         }
+//     } catch (error) {
+//         next(error)
+//     }
+// })
 
 
-        } else {
-            res.status(404).json({ message: "no teacher" })
-        }
+// //FUNCTIE CARE PERMITE ADAUGAREA UNUI CURS PENTRU UN ANUMIT PROFESOR
+// // //adaugare curs la un anumit profesor
+// app.post('/teachers/:teacherId/courses', async (req, res, next) => {
+//     try {
+//         //cautare profesor
+//         const teacher= await Teacher.findByPk(req.params.teacherId);
+//         if (teacher) {
+//             const course= await Course.create(req.body);
+//             teacher.addCourse(course);
+//             await teacher.save();
+//             res.status(201).json({message:"created"})
 
-    } catch (error) {
-        next(error)
-    }
-})
+//         } else {
+//             res.status(404).json({ message: "not found" })
+//         }
 
-//afisarea unui anumit curs al unui profesor
+//     } catch (error) {
+//         next(error)
+//         res.status(400).json({message:"eroare"})
+//     }
+// })
 
-app.get('/teachers/:teacherId/courses/:courseId', async(req,res,next)=>{
-    try{
-        const teacher = await Teacher.findByPk(req.params.teacherId);
-        if (teacher) {
-            const courses = await teacher.getCourses({id: req.params.courseId});
-            const course=courses.shift()
-            if (course) {
-                res.json(course)//trimitem cursurile identificate
+// //afisarea cursurilor unui anumit profesor
+// app.get('/teachers/:teacherId/courses', async (req, res, next) => {
+//     try {
+//         const teacher = await Teacher.findByPk(req.params.teacherId);
+//         if (teacher) {
+//             const courses = await teacher.getCourses();
+//             if (courses.length > 0) {
+//                 res.json(courses)//trimitem cursurile identificate
 
-            } else {
-                res.status(404).json({ message: " no courses" })
-            }
-
-
-        } else {
-            res.status(404).json({ message: "no teacher" })
-        }
+//             } else {
+//                 res.status(404).json({ message: " no courses" })
+//             }
 
 
+//         } else {
+//             res.status(404).json({ message: "no teacher" })
+//         }
 
-    }catch(error){
-        next(error)
-    }
-})
+//     } catch (error) {
+//         next(error)
+//     }
+// })
+
+// //afisarea unui anumit curs al unui profesor
+
+// app.get('/teachers/:teacherId/courses/:courseId', async(req,res,next)=>{
+//     try{
+//         const teacher = await Teacher.findByPk(req.params.teacherId);
+//         if (teacher) {
+//             const courses = await teacher.getCourses({id: req.params.courseId});
+//             const course=courses.shift()
+//             if (course) {
+//                 res.json(course)//trimitem cursurile identificate
+
+//             } else {
+//                 res.status(404).json({ message: " no courses" })
+//             }
+
+
+//         } else {
+//             res.status(404).json({ message: "no teacher" })
+//         }
+
+
+
+//     }catch(error){
+//         next(error)
+//     }
+// })
 
 //ADAUGARE OPERATII PENTRU LUCRUL CU STUDENTI
 //++ADAUGARE ELEMET PENTRU FEEDBACK
@@ -211,66 +216,66 @@ app.get('/user/teacher/:email/:password',(req,res,next)=>{
 
 //Realizarea grupurilor de studenti pentru studiu
 
-app.post('/groups',async(req,res,next)=>{
-    try{
-        let group=await Group.create(req.body);
-        res.status(200).json({message:"created"}).location(group.id).send()
+// app.post('/groups',async(req,res,next)=>{
+//     try{
+//         let group=await Group.create(req.body);
+//         res.status(200).json({message:"created"}).location(group.id).send()
 
-    }catch(error){
-        next(error)
-    }
-})
+//     }catch(error){
+//         next(error)
+//     }
+// })
 
-app.get('/groups',async(req,res,next)=>{
-    try{
-        let groups = await Group.findAll();
-        res.status(200).json(groups);
+// app.get('/groups',async(req,res,next)=>{
+//     try{
+//         let groups = await Group.findAll();
+//         res.status(200).json(groups);
 
-    }catch(error){
-        next(error)
-    }
-})
+//     }catch(error){
+//         next(error)
+//     }
+// })
 
-//functii pentru adaugarea unui student intr-un grup de studiu identificat prin id
-app.post('/groups/:id/students',async(req,res,next)=>{
-    try{
-        let group = await Group.findByPk(req.params.id)
-        if (group) {
-            const student= await Student.create(req.body);
-            group.addStudent(student);
-            await group.save();
-            res.status(201).json({message:"created"})
+// //functii pentru adaugarea unui student intr-un grup de studiu identificat prin id
+// app.post('/groups/:id/students',async(req,res,next)=>{
+//     try{
+//         let group = await Group.findByPk(req.params.id)
+//         if (group) {
+//             const student= await Student.create(req.body);
+//             group.addStudent(student);
+//             await group.save();
+//             res.status(201).json({message:"created"})
 
-        } else {
-            res.status(404).json({ message: "not found" })
-        }
+//         } else {
+//             res.status(404).json({ message: "not found" })
+//         }
 
-    }catch(error){
-        next(error)
-    }
-})
+//     }catch(error){
+//         next(error)
+//     }
+// })
 
-//afisarea studentilor dintr-un anumit grup de studiu
-app.get('/groups/:id/students', async (req, res, next) => {
-    try {
-        const group = await Group.findByPk(req.params.id);
-        if (group) {
-            const students = await group.getStudents();
-            if (students.length > 0) {
-                res.json(students)//trimitem cursurile identificate
+// //afisarea studentilor dintr-un anumit grup de studiu
+// app.get('/groups/:id/students', async (req, res, next) => {
+//     try {
+//         const group = await Group.findByPk(req.params.id);
+//         if (group) {
+//             const students = await group.getStudents();
+//             if (students.length > 0) {
+//                 res.json(students)//trimitem cursurile identificate
 
-            } else {
-                res.status(404).json({ message: " no students" })
-            }
+//             } else {
+//                 res.status(404).json({ message: " no students" })
+//             }
 
 
-        } else {
-            res.status(404).json({ message: "no group" })
-        }
+//         } else {
+//             res.status(404).json({ message: "no group" })
+//         }
 
-    } catch (error) {
-        next(error)
-    }
-})
+//     } catch (error) {
+//         next(error)
+//     }
+// })
 
  
