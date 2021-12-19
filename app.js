@@ -38,6 +38,7 @@ app.use(express.json());
 //importare routes
 app.use("/api-teacher",require("./routes/teachers"));
 app.use("/api-group",require("./routes/groups"));
+app.use("/api-feedback",require('./routes/feedback'))
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API');
