@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = 8080;
 const sequelize = require('./sequelize')
+const cors= require('cors')
 
 
 //Importam modelele create pentru entitatile folosite
@@ -49,6 +50,7 @@ listen(port, () => {
     console.log('Running on port ' + port);
 });
 
+app.use(cors({ origin: 'http://localhost:3000' }));
 // Create a middleware to handle 500 status errors.
 app.use((error, request, response, next) => {
     console.error(`[ERROR]: ${error}`);
@@ -215,6 +217,22 @@ app.get('/user/teacher/:email/:password',(req,res,next)=>{
 }
 })
 
+app.get('/user/student/:email/:password',(req,res,next)=>{
+    try{ Student.findOne({
+          where:{
+              email:req.params.email,
+              password:req.params.password
+          }
+      }).then(result=>{
+          if(result!==null)
+          res.json(result)
+          else
+          res.json({message:"invalid login"})
+      })
+  }catch(error){
+      next(error);
+  }
+  })
 //Realizarea grupurilor de studenti pentru studiu
 
 // app.post('/groups',async(req,res,next)=>{
