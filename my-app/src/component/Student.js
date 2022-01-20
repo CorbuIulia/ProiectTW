@@ -146,6 +146,7 @@ function Student(props) {
     <div>
       <div className="login__field">
         Acceseaza un curs</div>
+        <button className="btnLogOutTeacher" onClick={()=>{window.location.href ='http://localhost:3000/';}}>LogOut</button>
       <div>
         <div>
           <input className="login__input" type="text" ref={codCurs} placeholder="cod curs"></input>
@@ -160,7 +161,7 @@ function Student(props) {
         {ok == 1 ? Gasit : ""
         }
       </div>
-      <button className="btnLogOutTeacher" onClick={()=>{window.location.href ='http://localhost:3000/';}}>LogOut</button>
+      
 
 
     </div>
