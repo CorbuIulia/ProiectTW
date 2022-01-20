@@ -26,9 +26,9 @@ const showAskPage =(
       <div className=" button-demo">
                    
                     <div className="login">
-                    <h3>Alege tipul logarii</h3>
-                    <Button onClick={setareProf} label="Profesor" className="button login__submit" />
-                    <Button  onClick={setareStud} label="Student" className="button login__submit"/>
+                    <div id="logare">Alege tipul logarii</div>
+                    <Button onClick={setareProf} label="Profesor" className="log__submit" />
+                    <Button  onClick={setareStud} label="Student" className="log__submit"/>
                     </div>
                 </div>
                 </div>      

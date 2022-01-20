@@ -81,31 +81,31 @@ function Student(props) {
   const Feedback = (
     <div>
       <div>
-        <button onClick={
+        <button className="emoji"onClick={
         ()=>{
           addUser('happy')
-          alert("feedback adaugat")
+          alert( '😃')
         }}>
         <img src={Smiley}></img>
         </button>
-        <button  onClick={
+        <button className="emoji" onClick={
         ()=>{
           addUser('frown')
-          alert("feedback adaugat")
+          alert('☹️')
         }}>
         <img src={frown}></img>
         </button>
-        <button onClick={
+        <button className="emoji" onClick={
         ()=>{
           addUser('surprise')
-          alert("feedback adaugat")
+          alert('😮')
         }}>
         <img src={surprise}></img>
         </button>
-        <button onClick={
+        <button className="emoji" onClick={
         ()=>{
           addUser('confusing')
-          alert("feedback adaugat")
+          alert('🤔')
         }}>
         <img src={confusing}></img>
         </button>
@@ -129,8 +129,8 @@ function Student(props) {
     setFeedback(1);
   }
   const Gasit = (
-    <div className="login__submit">
-      <div>
+    <div className="login__submit2">
+      <div className="space">
         <h2 className="active">Tip:  {cursCautat.name}  </h2>
         <h2 className="active"> Materie:  {cursCautat.description}  </h2>
       </div>
@@ -145,7 +145,7 @@ function Student(props) {
   return (
     <div>
       <div className="login__field">
-        <h1>Acceseaza un curs </h1></div>
+        Acceseaza un curs</div>
       <div>
         <div>
           <input className="login__input" type="text" ref={codCurs} placeholder="cod curs"></input>
@@ -156,10 +156,11 @@ function Student(props) {
         {/* <button className="login__submit"onClick={getCurs}>Preia</button> */}
       </div>
       <div>
-        <button className="login__submit" onClick={cauta}>Cauta</button>
+        <button className="login__submit1" onClick={cauta}>Cauta</button>
         {ok == 1 ? Gasit : ""
         }
       </div>
+      <button className="btnLogOutTeacher" onClick={()=>{window.location.href ='http://localhost:3000/';}}>LogOut</button>
 
 
     </div>

@@ -32,7 +32,7 @@ function CourseForm (props) {
     
       </div>
       <div className='add'>
-        <input type='button'className="button login__submit" value='add' onClick={addUser} />
+        <input type='button'className="login__submit1" value='add' onClick={addUser} />
       </div>
     </div>
   )

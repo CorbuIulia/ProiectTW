@@ -96,7 +96,7 @@ useEffect(() => {
     <div className="container">
       <div className="screen">
         <div className="screen__content">
-          <div className="login">
+          <div className="login1">
             <div className="login__field">
               <i className="login__icon fas fa-user"></i>
               <input type="text" ref={emailRef} className="login__input" placeholder="User name / Email"></input>
@@ -106,9 +106,11 @@ useEffect(() => {
               <i className="login__icon fas fa-lock"></i>
               <input type="password" ref={passRef} className="login__input" placeholder="Password"></input>
 
+
             </div>
             <div>
-              <button className="button login__submit" onClick={onLoginStud }>Login</button>
+              <button className=" login__submit" onClick={onLoginStud }>Login</button>
+              <button className="btnHomeTeacher" onClick={()=>{window.location.href ='http://localhost:3000/';}}>INAPOI</button>
             </div>
             {/* <button className="button login__submit" onClick={onLoginStud}>
 					<span className="button__text">Log In Now</span>
@@ -131,7 +133,7 @@ useEffect(() => {
     <div className="container">
     <div className="screen">
       <div className="screen__content">
-        <div className="login">
+        <div className="login1">
           <div className="login__field">
             <i className="login__icon fas fa-user"></i>
             <input type="text" ref={emailRef} className="login__input" placeholder="User name / Email"></input>
@@ -141,7 +143,8 @@ useEffect(() => {
             <input type="password" ref={passRef} className="login__input" placeholder="Password"></input>
           </div>
           <div>
-            <button className="button login__submit" onClick={onLoginProf}>Login</button>
+            <button className=" login__submit" onClick={onLoginProf}>Login</button>
+            <button className="btnHomeTeacher" onClick={()=>{window.location.href ='http://localhost:3000/';}}>INAPOI</button>
           </div>
           {/* <button className="button login__submit" onClick={onLoginStud}>
         <span className="button__text">Log In Now</span>
