@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import { Button } from 'primereact/button';
+import Student from "./Student";
+import Teacher from "./Teacher";
 
 function App() {
   const[isStud, setIsStud]=useState(0);
@@ -20,13 +22,13 @@ function setareProf(){
 }
 const showAskPage =(
   <div className="App">
-      <div>Power puff</div>
+      
       <div className=" button-demo">
                    
-                    <div className="card">
+                    <div className="login">
                     <h3>Alege tipul logarii</h3>
-                    <Button onClick={setareProf} label="Profesor" className="p-button-text" />
-                    <Button  onClick={setareStud} label="Student" className="p-button-text"/>
+                    <Button onClick={setareProf} label="Profesor" className="button login__submit" />
+                    <Button  onClick={setareStud} label="Student" className="button login__submit"/>
                     </div>
                 </div>
                 </div>      
@@ -42,5 +44,13 @@ return (
   )
 
 }
+// function App () {
+//   return (
+//     <div>
+     
+//       <Student />
+//     </div>
+//   )
+// }
 
 export default App;

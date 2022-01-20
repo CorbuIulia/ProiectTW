@@ -24,18 +24,7 @@ const Course=sequelize.define('course',{
         }
 
     }
-    // start:{
-    //     type:DataTypes.DATE,
-    //     get() {
-    //         return moment(this.getDataValue('updatedAt')).format('DD/MM/YYYY h:mm:ss');
-    //     }
-    // } ,
-    // stop:{
-    //     type:DataTypes.DATE,
-    //     get() {
-    //         return moment(this.getDataValue('updatedAt')).format('DD/MM/YYYY h:mm:ss');
-    //     }
-    //}
+  
 
 })
 module.exports=Course;

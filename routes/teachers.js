@@ -1,8 +1,12 @@
 const Teacher = require("../models/Teacher");
 const Course = require("../models/Course");
+const Group = require("../models/GroupStud");
+const Feedback = require("../models/Feedback");
 const router = require("express").Router();
 
+
 router
+
     .post("/teachers", async (req, res, next) => {
         try {
             const teacher = await Teacher.create(req.body);
@@ -71,6 +75,32 @@ router
             next(error)
         }
     })
+    .get('/courses', async (req, res, next) => {
+        try {
+            const teachers = await Course.findAll();
+            if (teachers.length > 0) {
+                res.json(teachers)//trimitem profesorii existenti
+            } else {
+                res.status(404).json({ message: "not found" });
+            }
+        } catch (error) {
+            next(error)
+        }
+    })
+
+    // .get('/courses/:idCourse', async (req, res, next) => {
+    //     try {
+    //         const teacher = await Course.findByPk(req.params.idCourse);
+    //         if (teacher) {
+    //             res.status(200).json(teacher)
+    //         } else {
+
+    //         }
+    //     } catch (error) {
+    //         res.status(404).json({ message: " not found" });
+    //     }
+    // })
+    // .post('/courses/:idCourse/feedback')
 
     //afisarea unui anumit curs al unui profesor
     .get('/teachers/:teacherId/courses/:courseId', async (req, res, next) => {
@@ -96,6 +126,61 @@ router
         }
     })
 
+
+    .post('/teachers/:teacherId/courses/:courseId/feedback', async (req, res, next) => {
+        try {
+            const teacher = await Teacher.findByPk(req.params.teacherId);
+            if (teacher) {
+                const courses = await teacher.getCourses({ where: { id: req.params.courseId } });
+                const course = courses.shift()
+                if (course) {
+                    const feedback=await Feedback.create(req.body);
+                    course.addFeedback(feedback);
+                    await course.save();
+                    res.status(201).json({message:"created"});
+                    
+                    //curs . add feedback
+
+                } else {
+                    res.status(404).json({ message: " no courses" })
+                }
+
+
+            } else {
+                res.status(404).json({ message: "no teacher" })
+            }
+
+        } catch (error) {
+            next(error)
+            res.json({message:"eroare"})
+        }
+    })
+    .get('/teachers/:teacherId/courses/:courseId/feedback', async (req, res, next) => {
+        try {
+            const teacher = await Teacher.findByPk(req.params.teacherId);
+            if (teacher) {
+                const courses = await teacher.getCourses({ where: { id: req.params.courseId } });
+                const course = courses.shift()
+                if (course) {
+                    const feedback=await course.getFeedbacks();
+                 
+                    res.json(feedback);
+
+                } else {
+                    res.status(404).json({ message: " no courses" })
+                }
+
+
+            } else {
+                res.status(404).json({ message: "no teacher" })
+            }
+
+        } catch (error) {
+            next(error)
+            res.json({message:"eroare"})
+        }
+    })
+
     .delete('/teachers/:teacherId', async (req, res, next) => {
         try {
             const teacher = await Teacher.findByPk(req.params.teacherId);
@@ -115,15 +200,16 @@ router
         }
     })
     //afisarea unui profesor cu un anumit id
-    .get('/teachers/:teacherId', async (req, res, next) =>{
-        try{
-        const teacher = await Teacher.findByPk(req.params.teacherId);
-        if(teacher){
-            res.status(200).json(teacher)
-        }else{
+    .get('/teachers/:teacherId', async (req, res, next) => {
+        try {
+            const teacher = await Teacher.findByPk(req.params.teacherId);
+            if (teacher) {
+                res.status(200).json(teacher)
+            } else {
 
-        }}catch(error){
-            res.status(404).json({message:" not found"});
+            }
+        } catch (error) {
+            res.status(404).json({ message: " not found" });
         }
     })
     //UPDATE
@@ -147,6 +233,28 @@ router
             }
         } catch (err) {
             next(err);
+        }
+    })
+
+
+    //adaugare grup
+    .post('/teachers/:teacherId/group', async (req, res, next) => {
+        try {
+            //cautare profesor
+            const teacher = await Teacher.findByPk(req.params.teacherId);
+            if (teacher) {
+                const course = await Group.create(req.body);
+                teacher.addGroup(course);
+                await teacher.save();
+                res.status(201).json({ message: "created" })
+
+            } else {
+                res.status(404).json({ message: "not found" })
+            }
+
+        } catch (error) {
+            next(error)
+            res.status(400).json({ message: "eroare" });
         }
     });
 

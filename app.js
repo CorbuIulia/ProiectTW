@@ -24,10 +24,15 @@ Teacher.hasMany(Student);
 Group.hasMany(Student);
 Student.belongsTo(Group,{through:"one"})
 Teacher.hasMany(Course);
+// Student.hasMany(Course);
+// Course.hasMany(Student);
+
 Student.belongsToMany(Course, { through: "enrollements" });
 Course.belongsToMany(Student, { through: "enrollements" })
 
-
+//*********************adaugare legatura cu feedback
+Course.hasMany(Feedback)
+Feedback.belongsTo(Course,{through:"one"})
 // Express middleware
 app.use(
     express.urlencoded({
@@ -35,7 +40,7 @@ app.use(
     })
 );
 app.use(express.json());
-
+app.use(cors())
 //importare routes
 app.use("/api-teacher",require("./routes/teachers"));
 app.use("/api-group",require("./routes/groups"));
@@ -50,7 +55,7 @@ listen(port, () => {
     console.log('Running on port ' + port);
 });
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+//app.use(cors({ origin: 'http://localhost:3000' }));
 // Create a middleware to handle 500 status errors.
 app.use((error, request, response, next) => {
     console.error(`[ERROR]: ${error}`);
